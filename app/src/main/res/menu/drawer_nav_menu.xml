@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:icon="@android:drawable/alert_light_frame"
+        android:title="@string/heroes">
+        <menu>
+            <group>
+            <item android:title="Create Hero" android:id="@+id/btnGoToCreateHero"/>
+            <item android:title="View Heroes" android:id="@+id/btnGoToViewHeroes" />
+            </group>
+        </menu>
+
+    </item>
+    <item
+        android:icon="@android:drawable/alert_light_frame"
+        android:title="Covid-19">
+        <menu>
+            <group>
+                <item android:title="Covid Data" android:id="@+id/goToCovidData"/>
+                <item android:title="7 Day Moving Averages" android:id="@+id/goToMovingAverages"/>
+
+            </group>
+        </menu>
+
+    </item>
+
+</menu>
