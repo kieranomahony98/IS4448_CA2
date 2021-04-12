@@ -61,4 +61,5 @@ public class bar_chart extends Fragment {
         covidLineChart.invalidate();
 
     }
+
 }

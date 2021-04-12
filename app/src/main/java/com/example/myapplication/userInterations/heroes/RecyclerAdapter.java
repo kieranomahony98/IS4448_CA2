@@ -58,7 +58,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
                 imagePath = "https://img.icons8.com/metro/452/fantastic-four.png";
                 break;
             default:
-                imagePath = "https://lh3.googleusercontent.com/proxy/I2lQkCQE8OJS_LTb6mF5HMeoBN-jjv7-XyMW2HgTLkBNuA3Al6seu0Jb-FGEZjhnJV_4yNE9EUPbmAbijPwHmgHUCHXEjPM";
+                imagePath = "https://previews.123rf.com/images/chekman/chekman1911/chekman191100208/133158700-vector-superhero-logo-isolated-black-diamond-icon-dotted-superhero-logo-template-in-pop-art-design-.jpg";
                 break;
         }
         Glide.with(context).load(imagePath).apply(new RequestOptions().override(100, 100)).into(holder.ivLogo);
