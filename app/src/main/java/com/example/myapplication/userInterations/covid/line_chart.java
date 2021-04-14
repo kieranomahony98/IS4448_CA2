@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.api.CovidApiHandler;
+import com.example.myapplication.data.Covid19DataHolder;
 import com.example.myapplication.interfaces.CovidCallback;
 import com.example.myapplication.model.Covid19Data;
 import com.example.myapplication.model.heroModel;
@@ -69,10 +70,20 @@ public class line_chart extends Fragment implements AdapterView.OnItemSelectedLi
     }
 
     private void getChartData() {
-        CovidApiHandler covidApiHandler = new CovidApiHandler();
+        CovidApiHandler covidApiHandler = CovidApiHandler.getInstance();
+        final Covid19DataHolder covid19DataHolder = Covid19DataHolder.getInstance();
+        covid19DataList = covid19DataHolder.getList();
+
+        if(covid19DataList != null){
+            setDates();
+            formatChartData();
+            return;
+        }
+
         covidApiHandler.getLiveData(getContext(), new CovidCallback() {
             @Override
             public void onSuccess(ArrayList<Covid19Data> covid19Data) {
+                covid19DataHolder.setList(covid19Data);
                 covid19DataList = covid19Data;
                 setDates();
                 formatChartData();

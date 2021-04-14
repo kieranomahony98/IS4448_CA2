@@ -21,6 +21,14 @@ import java.util.ArrayList;
 
 public class CovidApiHandler {
     final String url = "https://api.covid19api.com/live/country/ireland";
+    private static CovidApiHandler covidApiHandler;
+
+    public static CovidApiHandler getInstance(){
+        if(covidApiHandler == null){
+            covidApiHandler = new CovidApiHandler();
+        }
+        return covidApiHandler;
+    }
 
     public void getLiveData(Context context, final CovidCallback covidCallback) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);

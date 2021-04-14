@@ -69,7 +69,7 @@ public class create_hero extends Fragment {
                 }
 
                 heroModel h = new heroModel(-1, heroName, heroRealName, rating, teamAffillation);
-                HeroApiHandler heroApiHandler = new HeroApiHandler();
+                HeroApiHandler heroApiHandler = HeroApiHandler.getInstance();
 
                 if (finalEditHeroModel != null) {
 

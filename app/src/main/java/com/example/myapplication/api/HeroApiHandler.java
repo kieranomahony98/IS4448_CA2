@@ -30,9 +30,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HeroApiHandler {
-
+    private static HeroApiHandler heroApiHandler;
     public final String url = "https://gleeson.io/IS4447/HeroAPI/v1/Api.php?apicall=";
     Gson gson = new Gson();
+
+    public static HeroApiHandler getInstance(){
+        if(heroApiHandler == null){
+            heroApiHandler = new HeroApiHandler();
+        }
+        return heroApiHandler;
+    }
 
     public void getHeros(final VolleyCallback volleyCallback, Context context) {
         RequestQueue requestQueue = Volley.newRequestQueue(context);

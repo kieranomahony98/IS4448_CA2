@@ -97,8 +97,8 @@ public class view_heroes extends Fragment {
         super.onResume();
         pbLoading.setVisibility(View.VISIBLE);
 
-        HeroApiHandler HeroApiHandler = new HeroApiHandler();
-        HeroApiHandler.getHeros(new VolleyCallback() {
+        HeroApiHandler heroApiHandler = HeroApiHandler.getInstance();
+        heroApiHandler.getHeros(new VolleyCallback() {
             @Override
             public void onSuccess(ArrayList<heroModel> heroes) {
                 heroModels = heroes;
@@ -122,7 +122,7 @@ public class view_heroes extends Fragment {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             final int position = viewHolder.getAdapterPosition();
-            HeroApiHandler heroApiHandler = new HeroApiHandler();
+            HeroApiHandler heroApiHandler = HeroApiHandler.getInstance();
             Log.d("direction", String.valueOf(direction));
 
             switch (direction) {

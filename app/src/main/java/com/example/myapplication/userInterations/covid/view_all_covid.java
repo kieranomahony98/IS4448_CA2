@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.myapplication.R;
 import com.example.myapplication.api.CovidApiHandler;
+import com.example.myapplication.data.Covid19DataHolder;
 import com.example.myapplication.interfaces.CovidCallback;
 import com.example.myapplication.model.Covid19Data;
 import com.google.gson.Gson;
@@ -51,10 +52,20 @@ public class view_all_covid extends Fragment {
     public void onResume() {
         super.onResume();
 
-        CovidApiHandler covidApiHandler = new CovidApiHandler();
+        CovidApiHandler covidApiHandler = CovidApiHandler.getInstance();
+        final Covid19DataHolder covid19DataHolder = Covid19DataHolder.getInstance();
+        covid19Data = covid19DataHolder.getList();
+
+        if(covid19Data != null){
+            pbLoading.setVisibility(View.INVISIBLE);
+            createRecyclerView();
+            return;
+        }
+
         covidApiHandler.getLiveData(getContext(), new CovidCallback() {
             @Override
             public void onSuccess(ArrayList<Covid19Data> covidData) {
+                covid19DataHolder.setList(covid19Data);
                 covid19Data = covidData;
                 pbLoading.setVisibility(View.INVISIBLE);
                 createRecyclerView();
