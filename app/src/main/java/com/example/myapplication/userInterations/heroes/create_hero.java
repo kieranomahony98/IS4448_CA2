@@ -20,6 +20,8 @@ import com.example.myapplication.model.heroModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 
+import java.util.HashMap;
+
 public class create_hero extends Fragment {
 
     TextInputEditText name, realName;
@@ -83,10 +85,11 @@ public class create_hero extends Fragment {
                     heroApiHandler.updateHero(new CreateHero() {
                         @Override
                         public void onSuccess(heroModel hero) {
-                            FragmentManager fragmentManager = getFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.fgMain, new view_heroes());
-                            fragmentTransaction.commit();
+                            getFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.fgMain, new view_heroes())
+                                    .addToBackStack(null)
+                                    .commit();
                             return;
                         }
 
@@ -135,6 +138,7 @@ public class create_hero extends Fragment {
             h.setRating(rating);
             isUpdated = true;
         }
+
         final boolean finalIsUpdated = isUpdated;
         return new UpdateHeroValidation() {
             @Override
@@ -154,13 +158,29 @@ public class create_hero extends Fragment {
         realName.setText(h.getRealName());
         spRating.setSelection(h.getRating() - 1);
         btnCreateHero.setText("Update Hero");
-
+        int postion = getPosition(h.getTeamAffiliation());
+        if (postion != -1) {
+            spTeamAffiliation.setSelection(getPosition(h.getTeamAffiliation()));
+        }
     }
 
+    private int getPosition(String teamAffiliation) {
+        HashMap<String, Integer> heroHashMap = new HashMap<String, Integer>() {{
+            put("Avengers", 0);
+            put("Justice League", 1);
+            put("X-Men", 2);
+            put("Fantastic Four", 3);
+        }};
+        if (heroHashMap.containsKey(teamAffiliation)) {
+            return heroHashMap.get(teamAffiliation);
+        }
+        return -1;
+    }
 
 }
 
 interface UpdateHeroValidation {
     boolean isChanged();
+
     heroModel h();
 }

@@ -56,7 +56,7 @@ public class view_all_covid extends Fragment {
         final Covid19DataHolder covid19DataHolder = Covid19DataHolder.getInstance();
         covid19Data = covid19DataHolder.getList();
 
-        if(covid19Data != null){
+        if (covid19Data.size() != 0) {
             pbLoading.setVisibility(View.INVISIBLE);
             createRecyclerView();
             return;
@@ -106,10 +106,11 @@ public class view_all_covid extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putString("covid19Obj", gson.toJson(covid19Data));
         fragment.setArguments(bundle);
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fgMain, fragment);
-        fragmentTransaction.commit();
+        getFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fgMain, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private View.OnClickListener onItemClickListener = new View.OnClickListener() {

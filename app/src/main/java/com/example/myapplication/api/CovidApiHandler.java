@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class CovidApiHandler {
     final String url = "https://api.covid19api.com/live/country/ireland";
-    private static CovidApiHandler covidApiHandler;
+    private static CovidApiHandler covidApiHandler = null;
 
     public static CovidApiHandler getInstance(){
         if(covidApiHandler == null){

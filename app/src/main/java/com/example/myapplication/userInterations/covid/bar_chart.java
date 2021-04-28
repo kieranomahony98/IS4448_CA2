@@ -62,4 +62,5 @@ public class bar_chart extends Fragment {
 
     }
 
+
 }

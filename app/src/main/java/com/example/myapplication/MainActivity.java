@@ -14,12 +14,16 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
 
+import com.example.myapplication.api.CovidApiHandler;
+import com.example.myapplication.api.HeroApiHandler;
 import com.example.myapplication.userInterations.covid.line_chart;
 import com.example.myapplication.userInterations.covid.view_all_covid;
 import com.example.myapplication.userInterations.heroes.create_hero;
 import com.example.myapplication.userInterations.heroes.view_heroes;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener;
+
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements OnNavigationItemSelectedListener  {
@@ -39,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
         toolbar = findViewById(R.id.tbNav);
         setSupportActionBar(toolbar);
 
+        createInstances();
+
         drawerLayout = findViewById(R.id.mainDrawer);
         navigationView = findViewById(R.id.nvAppNav);
         navigationView.setNavigationItemSelectedListener(this);
@@ -51,11 +57,18 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
 
     }
 
+    private void createInstances() {
+        CovidApiHandler.getInstance();
+        HeroApiHandler.getInstance();
+
+    }
+
     private void loadFragment(Fragment nextFragment){
-        fragmentManager = getSupportFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fgMain, nextFragment);
-        fragmentTransaction.commit();
+        getSupportFragmentManager()
+        .beginTransaction()
+        .replace(R.id.fgMain, nextFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
@@ -76,5 +89,19 @@ public class MainActivity extends AppCompatActivity implements OnNavigationItemS
                 return true;
         }
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        tellFragments();
+        super.onBackPressed();
+    }
+    //https://medium.com/@Wingnut/onbackpressed-for-fragments-357b2bf1ce8e
+    private void tellFragments() {
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        for(Fragment f : fragments){
+            if(f != null && f instanceof view_heroes)
+                ((view_heroes)f).onBackPressed();
+        }
     }
 }

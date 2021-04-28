@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HeroApiHandler {
-    private static HeroApiHandler heroApiHandler;
+    private static HeroApiHandler heroApiHandler = null;
     public final String url = "https://gleeson.io/IS4447/HeroAPI/v1/Api.php?apicall=";
     Gson gson = new Gson();
 

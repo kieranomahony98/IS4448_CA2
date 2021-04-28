@@ -26,6 +26,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.api.HeroApiHandler;
 import com.example.myapplication.interfaces.DeleteHero;
 import com.example.myapplication.interfaces.VolleyCallback;
+import com.example.myapplication.interfaces.onBackPressed;
 import com.example.myapplication.model.heroModel;
 import com.google.gson.Gson;
 
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 
 
-public class view_heroes extends Fragment {
+public class view_heroes extends Fragment implements onBackPressed {
     RecyclerView recyclerView;
     EditText etSearchBox;
     private RecyclerView.LayoutManager layoutManager;
@@ -80,11 +81,11 @@ public class view_heroes extends Fragment {
 
     private void filterHeroes(String searchText) {
         ArrayList<heroModel> heroList = new ArrayList<>();
-        for(heroModel h: heroModels){
-            if(h.getName().toLowerCase().contains(searchText.toLowerCase())){
+        for (heroModel h : heroModels) {
+            if (h.getName().toLowerCase().contains(searchText.toLowerCase())) {
                 heroList.add(h);
             }
-            if(h.getRealName().toLowerCase().contains(searchText.toLowerCase())){
+            if (h.getRealName().toLowerCase().contains(searchText.toLowerCase())) {
                 heroList.add(h);
             }
         }
@@ -150,10 +151,11 @@ public class view_heroes extends Fragment {
                     Bundle bundle = new Bundle();
                     bundle.putString("hero", gson.toJson(heroModels.get(position)));
                     fragment.setArguments(bundle);
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fgMain, fragment);
-                    fragmentTransaction.commit();
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fgMain, fragment)
+                            .addToBackStack(null)
+                            .commit();
                     break;
             }
         }
@@ -184,5 +186,10 @@ public class view_heroes extends Fragment {
             Log.e("Recycler View Fragment", "Error creating the recycler view" + e.getMessage());
             throw e;
         }
+    }
+
+    //https://medium.com/@Wingnut/onbackpressed-for-fragments-357b2bf1ce8e
+    public void onBackPressed() {
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 }

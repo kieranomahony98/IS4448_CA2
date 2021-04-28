@@ -73,8 +73,9 @@ public class line_chart extends Fragment implements AdapterView.OnItemSelectedLi
         CovidApiHandler covidApiHandler = CovidApiHandler.getInstance();
         final Covid19DataHolder covid19DataHolder = Covid19DataHolder.getInstance();
         covid19DataList = covid19DataHolder.getList();
-
-        if(covid19DataList != null){
+        Log.d("tags", "getChartData: " + covid19DataList);
+        if(covid19DataList.size() != 0){
+            Log.d("data", "Data");
             setDates();
             formatChartData();
             return;
