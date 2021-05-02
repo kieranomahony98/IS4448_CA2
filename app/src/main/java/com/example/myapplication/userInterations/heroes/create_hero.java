@@ -70,7 +70,7 @@ public class create_hero extends Fragment {
                     return;
                 }
 
-                heroModel h = new heroModel(-1, heroName, heroRealName, rating, teamAffillation);
+                final heroModel h = new heroModel(-1, heroName, heroRealName, rating, teamAffillation);
                 HeroApiHandler heroApiHandler = HeroApiHandler.getInstance();
 
                 if (finalEditHeroModel != null) {
@@ -108,7 +108,7 @@ public class create_hero extends Fragment {
                             realName.setText("");
                             spRating.setSelection(0);
                             spTeamAffiliation.setSelection(0);
-                            Toast.makeText(getContext(), hero.getName() + " has successfully being added to heroes", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), h.getName() + " has successfully being added to heroes", Toast.LENGTH_SHORT).show();
 
                         }
 
